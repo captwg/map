@@ -11,20 +11,32 @@ st.title("🌍 遗传病突变位点全球人群频率分布")
 # 加载数据
 @st.cache_data
 def load_data():
-    # 使用最终合并后的数据源
-    data_path = "final_variant_data.csv"
+    # 尝试多种可能的文件名（支持压缩格式）
+    possible_paths = [
+        "final_variant_data.csv",
+        "final_variant_data.csv.gz",
+        "final_variant_data.zip"
+    ]
     
-    if not os.path.exists(data_path):
-        st.error(f"找不到变异数据文件: {data_path}")
+    data_path = None
+    for path in possible_paths:
+        if os.path.exists(path):
+            data_path = path
+            break
+    
+    if data_path is None:
+        st.error("找不到变异数据文件。请确保仓库中包含 final_variant_data.csv 或其压缩包 (.gz / .zip)")
         return None
     
-    # 直接加载合并后的数据
-    df = pd.read_csv(data_path)
-    
-    # 确保 rsid 格式正确
-    df['rsid'] = pd.to_numeric(df['rsid'], errors='coerce')
-    
-    return df
+    # 加载数据（Pandas 会自动处理 .gz 和 .zip 压缩）
+    try:
+        df = pd.read_csv(data_path)
+        # 确保 rsid 格式正确
+        df['rsid'] = pd.to_numeric(df['rsid'], errors='coerce')
+        return df
+    except Exception as e:
+        st.error(f"读取数据文件 {data_path} 时出错: {e}")
+        return None
 
 try:
     full_df = load_data()
