@@ -45,7 +45,7 @@
 
 ## 3. 查看网页效果
 
-https://rtuongmeeda9cpan8fyj4e.streamlit.app/
+[https://rtuongmeeda9cpan8fyj4e.streamlit.app/](https://pgp8z2v6mlrdhmeo8gmigc.streamlit.app/)
 
 ## 4. drawbacks
 - **大量的突变位点没有记录**：gnomAD数据库中暂无该位点的频率记录，可能是致病性突变在人群中通常极度罕见。gnomAD虽然覆盖了14万人，但仍可能未捕获到该变异。
